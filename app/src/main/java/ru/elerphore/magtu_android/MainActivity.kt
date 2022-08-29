@@ -13,8 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -76,14 +75,29 @@ fun MainScreen() {
 @Composable
 fun SettingScreen() {
     Column() {
-        Text("Setting Screen")
+        var textOne by remember { mutableStateOf("Hello") }
+        var textTwo by remember { mutableStateOf("Hello") }
+
+        TextField(
+            value = textOne,
+            onValueChange = { textOne = it },
+            label = { Text("Label") }
+        )
+        TextField(
+            value = textTwo,
+            onValueChange = { textTwo = it },
+            label = { Text("Label") }
+        )
+        Button(onClick = {  }) {
+            Text(text = "Сохранить")
+        }
     }
 }
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String) {
 
-    object Home : BottomNavItem("Home", R.drawable.ic_launcher_background,"home")
-    object MyNetwork: BottomNavItem("My Network",R.drawable.ic_launcher_background,"my_network")
+    object Home : BottomNavItem("Расписание", R.drawable.ic_launcher_background,"home")
+    object MyNetwork: BottomNavItem("Настройки",R.drawable.ic_launcher_background,"my_network")
 }
 
 @Composable
