@@ -27,12 +27,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import ru.elerphore.magtu_android.data.Settings
 import ru.elerphore.magtu_android.http_client.WebClient
 
 val wc = WebClient()
+
+
 
 val paddingModifier  = Modifier
     .padding(10.dp)
@@ -45,8 +50,27 @@ val paddingModifier  = Modifier
     }
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        CoroutineScope(IO).launch {
+
+            val db = Room.databaseBuilder(
+                applicationContext,
+                Database::class.java, "magtu"
+            ).build()
+
+            val settingsDao = db.settingsDao()
+            val list = settingsDao.getAll()
+
+            if(list.isEmpty()) {
+                settingsDao.insert(Settings(0, "ИСп-19-4", false))
+            }
+
+            println("LIST DATABASE: $list")
+        }
 
         setContent {
             Main()
@@ -88,7 +112,9 @@ fun SettingScreen() {
             onValueChange = { textTwo = it },
             label = { Text("Label") }
         )
-        Button(onClick = {  }) {
+        Button(onClick = {
+
+        }) {
             Text(text = "Сохранить")
         }
     }
@@ -111,7 +137,6 @@ fun NavigationGraph(navController: NavHostController) {
         }
     }
 }
-
 
 @Composable
 fun BottomNavigation(navController: NavController) {

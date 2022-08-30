@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -72,4 +73,11 @@ dependencies {
     implementation "io.ktor:ktor-client-serialization-jvm:$ktor_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
     implementation "androidx.navigation:navigation-compose:2.4.0-beta02"
+
+    def room_version = "2.4.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 }
