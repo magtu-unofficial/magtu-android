@@ -25,3 +25,7 @@ class WebClient {
     }
     suspend fun getSchoolDays(): ResponseSchoolDay = client.get<ResponseSchoolDay>("https://ivanik.ru/mpk/api/tables/latest")
 }
+
+object WC {
+    val wc = WebClient()
+}
