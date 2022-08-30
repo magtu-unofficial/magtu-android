@@ -9,7 +9,7 @@ import ru.elerphore.magtu_android.data.ResponseSchoolDay
 
 class WebClient {
 
-    private val client = HttpClient(Android) {
+    val client = HttpClient(Android) {
         expectSuccess = true
         install(JsonFeature) {
             serializer = KotlinxSerializer(json)
@@ -23,9 +23,10 @@ class WebClient {
             encodeDefaults = false
         }
     }
-    suspend fun getSchoolDays(): ResponseSchoolDay = client.get<ResponseSchoolDay>("https://ivanik.ru/mpk/api/tables/latest")
 }
 
 object WC {
-    val wc = WebClient()
+    val wc = WebClient().client
+
+    suspend fun getSchoolDays() = wc.get<ResponseSchoolDay>("http://192.168.0.2:8080/tables/latest")//("https://ivanik.ru/mpk/api/tables/latest")
 }
