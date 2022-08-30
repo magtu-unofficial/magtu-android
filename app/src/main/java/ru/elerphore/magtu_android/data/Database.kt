@@ -1,4 +1,4 @@
-package ru.elerphore.magtu_android
+package ru.elerphore.magtu_android.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
