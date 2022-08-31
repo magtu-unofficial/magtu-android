@@ -13,7 +13,7 @@ data class SchoolDay(
 
 //    val date: LocalDateTime,
 
-    val lessons: List<Lesson> = Collections.emptyList(),
+    val pairs: List<Lesson> = Collections.emptyList(),
 
     val displayName: String,
 )

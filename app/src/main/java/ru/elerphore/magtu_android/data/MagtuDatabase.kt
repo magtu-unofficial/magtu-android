@@ -19,4 +19,11 @@ object DB {
         appContext = context
         db = Room.databaseBuilder(context, MagtuDatabase::class.java, "magtu.db").build()
     }
+
+    val settingRepository by lazy {
+        SettingRepository(
+            settingsDao = db.settingsDao()
+        )
+    }
+
 }

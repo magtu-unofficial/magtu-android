@@ -11,9 +11,20 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import ru.elerphore.magtu_android.data.DB
+import ru.elerphore.magtu_android.data.Settings
 
 @Composable
-fun SettingScreen() {
+fun SettingScreen(
+    viewModel: SettingScreenViewModel = viewModel()
+) {
+    val state = viewModel.state.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -22,6 +33,14 @@ fun SettingScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         var groupName by remember { mutableStateOf("") }
+
+//        if(viewModel.setting != null) {
+//            groupName = viewModel.setting!!.groupName!!
+//        }
+
+        if(state.value.setting.isNotEmpty()) {
+            groupName = state.value.setting.first().groupName!!
+        }
 
         TextField(
             value = groupName,
@@ -32,7 +51,10 @@ fun SettingScreen() {
         )
 
         Button(onClick = {
-
+            CoroutineScope(IO).launch {
+                val st = Settings(groupName = groupName)
+                DB.settingRepository.save(st)
+            }
         }) {
             Text(text = "Сохранить")
         }

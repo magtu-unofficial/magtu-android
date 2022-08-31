@@ -11,12 +11,10 @@ import ru.elerphore.magtu_android.data.SchoolDay
 import ru.elerphore.magtu_android.http_client.WC
 import javax.inject.Inject
 
-//@HiltViewModel
 @HiltViewModel
 class MainScreenViewModel @Inject constructor() : ViewModel() {
 
     val _schoolDays = mutableStateListOf<SchoolDay>()
-
 
     init {
         schoolDays()

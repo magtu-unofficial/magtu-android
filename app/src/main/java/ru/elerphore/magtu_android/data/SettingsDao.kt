@@ -1,21 +1,22 @@
 package ru.elerphore.magtu_android.data
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface SettingsDao {
+abstract class SettingsDao {
     @Query("SELECT * FROM settings")
-    fun getAll(): List<Settings>
+    abstract fun settings(): Flow<List<Settings>>
 
     @Insert
-    fun insertAll(vararg users: Settings)
+    abstract suspend fun insertAll(vararg users: Settings)
 
     @Insert
-    fun insert(settings: Settings)
+    abstract fun insert(settings: Settings)
 
     @Delete
-    fun delete(settings: Settings)
+    abstract suspend fun delete(settings: Settings)
 
     @Update
-    fun update(settings: Settings)
+    abstract suspend fun update(settings: Settings)
 }

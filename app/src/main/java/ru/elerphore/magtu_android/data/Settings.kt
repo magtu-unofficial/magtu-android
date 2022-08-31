@@ -6,12 +6,18 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Settings(
-    @PrimaryKey
-    val uid: Int,
+    @PrimaryKey(autoGenerate = true)
+    val uid: Int = 0,
 
     @ColumnInfo(name = "group_name")
-    val groupName: String,
+    val groupName: String? = null,
 
     @ColumnInfo(name = "is_teacher")
-    val isTeacher: Boolean
+    val isTeacher: Boolean = false,
+
+    @ColumnInfo(name = "name")
+    val name: String? = null,
+
+    @ColumnInfo(name = "surname")
+    val surname: String? = null,
 )
