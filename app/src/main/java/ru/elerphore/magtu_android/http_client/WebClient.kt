@@ -29,4 +29,5 @@ object WC {
     val wc = WebClient().client
 
     suspend fun getSchoolDays() = wc.get<ResponseSchoolDay>("http://192.168.0.2:8080/tables/latest")//("https://ivanik.ru/mpk/api/tables/latest")
+    suspend fun getGroups() = wc.get<List<String>>("http://192.168.0.2:8080/groups")
 }

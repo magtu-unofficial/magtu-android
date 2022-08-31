@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import ru.elerphore.magtu_android.data.DB
 import ru.elerphore.magtu_android.data.SettingRepository
 import ru.elerphore.magtu_android.data.Settings
+import ru.elerphore.magtu_android.http_client.WC
 import javax.inject.Inject
 
 class SettingScreenViewModel(
@@ -21,9 +22,12 @@ class SettingScreenViewModel(
     init {
         viewModelScope.launch {
 
+            val groups = WC.getGroups()
+
             combine(categoryRepository.setting()) { _settings ->
                 SettingScreenState(
-                    setting = _settings.first()
+                    setting = _settings.first(),
+                    groups = groups
                 )
             }.collect {
                 _state.value = it
@@ -33,4 +37,7 @@ class SettingScreenViewModel(
     }
 }
 
-data class SettingScreenState(val setting: List<Settings> = emptyList())
+data class SettingScreenState(
+    val setting: List<Settings> = emptyList(),
+    val groups: List<String> = emptyList()
+)
