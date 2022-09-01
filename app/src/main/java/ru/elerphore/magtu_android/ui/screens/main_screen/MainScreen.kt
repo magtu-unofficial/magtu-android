@@ -39,7 +39,7 @@ fun MainScreen() {
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    schoolDay.pairs.forEach { lesson ->
+                    schoolDay.pairs.sortedBy { it.number }.forEach { lesson ->
                         Text(
                             buildAnnotatedString {
                                 withStyle(style = SpanStyle(fontWeight = FontWeight.W900, color = Color(0xFF4552B8))
@@ -49,22 +49,29 @@ fun MainScreen() {
                             }
                         )
                         Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            buildAnnotatedString {
+                                withStyle(style = SpanStyle(fontWeight = FontWeight.W900, color = Color(0xFF4552B8))
+                                ) {
+                                    append(lesson.name!!)
+                                }
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            buildAnnotatedString {
+                                withStyle(style = SpanStyle(fontWeight = FontWeight.W900, color = Color(0xFF4552B8))
+                                ) {
+                                    append(lesson.classroom!!)
+                                }
+                            }
+                        )
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-fun SchoolDays() {
-
-//    LazyColumn() {
-//        items(3) {
-
-//        }
-//    }
-//    Column() {
-
-//    }
 }
