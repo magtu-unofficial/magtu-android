@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.elerphore.magtu_android.data.DB
@@ -20,16 +22,18 @@ class SettingScreenViewModel(
    var _state by mutableStateOf(SettingScreenState())
 
     init {
-        viewModelScope.launch {
-            viewModelScope.launch {
-                combine(
-                    categoryRepository.setting()
-                ) { setting ->
-                    SettingScreenState().apply {
-                        this.groupName.value = setting.first().name ?: ""
-                        this.groups.value = WC.getGroups()
-                    }
-                }.collect { _state = it }
+        CoroutineScope(IO).launch {
+            categoryRepository.setting().let { setting ->
+                val _setting = (when(setting) {
+                    null -> categoryRepository.save(Settings()).let { Settings() }
+                    else -> setting
+                })
+                _state = SettingScreenState().apply {
+                    this.groupName.value = _setting.groupName
+                    this.subGroup.value = _setting.subGroup.toString()
+                    this.groups.value = WC.getGroups()
+                }
+
             }
         }
     }
@@ -37,5 +41,6 @@ class SettingScreenViewModel(
 
 data class SettingScreenState(
     var groupName: MutableState<String> = mutableStateOf(""),
+    var subGroup: MutableState<String> = mutableStateOf(""),
     val groups: MutableState<List<String>> = mutableStateOf(emptyList<String>())
 )

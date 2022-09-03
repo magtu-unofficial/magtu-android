@@ -1,7 +1,6 @@
 package ru.elerphore.magtu_android.data
 
 import kotlinx.serialization.Serializable
-import java.time.LocalDateTime
 import java.util.*
 
 @Serializable
@@ -11,7 +10,7 @@ data class ResponseSchoolDay(val items: List<SchoolDay>)
 data class SchoolDay(
     val group: List<String> = Collections.emptyList(),
 
-//    val date: LocalDateTime,
+    val date: kotlinx.datetime.LocalDateTime,
 
     val pairs: List<Lesson> = Collections.emptyList(),
 

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class SettingsDao {
     @Query("SELECT * FROM settings where uid = 1")
-    abstract fun settings(): Flow<Settings>
+    abstract fun settings(): Settings?
 
     @Insert
     abstract suspend fun insertAll(vararg users: Settings)

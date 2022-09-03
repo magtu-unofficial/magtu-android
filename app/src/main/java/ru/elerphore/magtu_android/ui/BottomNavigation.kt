@@ -3,6 +3,8 @@ package ru.elerphore.magtu_android.ui
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -27,14 +29,10 @@ object BottomNavigation {
             val currentRoute = navBackStackEntry?.destination?.route
             items.forEach { item ->
                 BottomNavigationItem(
-                    icon = {
-                        Icon(
-                            painterResource(id = item.icon),
-                            contentDescription = item.title
-                        )
-                    },
+                    icon = { Icon(item.icon, item.icon.name, tint = Color.White) },
                     label = {
                         Text(
+                            color = Color.White,
                             text = item.title,
                             fontSize = 9.sp
                         )

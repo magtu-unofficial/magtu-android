@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 class SettingRepository(
     private val settingsDao: SettingsDao
 ) {
-    fun setting(): Flow<Settings> = settingsDao.settings()
+    fun setting(): Settings? = settingsDao.settings()
 
     fun save(settings: Settings) = settingsDao.insert(settings)
 
